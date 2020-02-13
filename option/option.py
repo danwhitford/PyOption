@@ -20,6 +20,8 @@ B = TypeVar("B")
 
 
 def some(val: A) -> Optional[A]:
+    if val == None:
+        raise InvalidArgument("Cannot create Optional from NoneType. Consider Optional[Optional[T]]")
     return val
 
 
@@ -43,13 +45,7 @@ def bind(opt: Optional[A], func: Callable[[A], Optional[B]]) -> Optional[B]:
 
 
 def join(optopt: Optional[Optional[A]]) -> Optional[A]:
-    if optopt:
-        if optopt == type(None):
-            return none()
-        else:
-            return optopt
-    else:
-        return none()
+    return optopt
 
 
 def map(func: Callable[[A], B], opt: Optional[A]) -> Optional[B]:
